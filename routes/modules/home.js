@@ -4,13 +4,14 @@ const Category = require('../../models/category')
 const Record = require('../../models/record')
 
 router.get('/', (req, res) => {
-  const categories = Category.find()
-    .lean()
-    .then(categories => categories)
-
   Record.find()
     .lean()
-    .then(records => res.render('index', { records, categories }))
+    .then(records => {
+      Category.find()
+        .lean()
+        .then(categories => res.render('index', { records, categories }))
+        .catch(error => console.log(error))
+    })
     .catch(error => console.log(error))
 })
 
