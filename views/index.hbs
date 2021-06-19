@@ -3,8 +3,9 @@
   <div class="form-group row">
     <label for="category" class="col-2">類別</label>
     <select name="category" id="category" class="form-control col-10">
+      <option selected disabled value="none">請下拉</option>
       {{#each categories}}
-      <option value="{{this.category}}">{{this.category}}</option>
+      <option data-icon="{{ this.icon }}" value="{{this.category}}">{{this.category}}</option>
       {{/each}}
     </select>
   </div>
@@ -15,7 +16,7 @@
       <h4>總金額：</h4>
     </div>
     <div class="col">
-      <h3>25260</h3>
+      <h3>{{ totalAmount }}</h3>
     </div>
   </div>
 </div>
@@ -27,13 +28,21 @@
         {{#each records}}
           <tr>
             {{!-- 支出內容 --}}
-            <th scope="row"><i class="fas fa-utensils"></i></th>
+            <th scope="row"> {{ this.category }} {{ categories.category}}</th>
             <td><h4>{{ this.name }}</h4>
             <small>{{ this.date }}</small></td>
             <td>{{ this.amount }}</td>
             {{!-- 編輯選項 --}}
-            <td><div class="btn">修改</div></td>
-            <td><div class="btn">刪除</div></td>
+            <td>
+              <form action="/records/{{ _id }}/edit" method="GET">
+                <button class="btn"><div class="btn">修改</div></button>
+              </form>
+            </td>
+            <td>
+              <form action="./records/{{ this._id }}?_method=DELETE" method="POST">
+                <button type="submit" class="btn" id="delete-submit" onclick="return(confirm('確認要刪除【{{ this.name }}】嗎?'))">刪除</button>
+              </form>
+            </td>
           </tr>
         {{/each}}
 
@@ -47,7 +56,7 @@
 <div class="container my-5">
   <div class="row text-center">
     <div class="col-6 offset-3">
-      <button type="submit" class="btn btn-info btn-block">新增支出</button>
+      <a href="/records/new"><button type="submit" class="btn btn-info btn-block">新增支出</button></a>
     </div>
   </div>
 </div>

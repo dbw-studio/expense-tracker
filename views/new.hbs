@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <form action="/record" method="POST"></form>
+  <form action="/records" method="post" id="add-form">
 
     <div class="row mt-3">
       <div class="col">
@@ -17,6 +17,8 @@
           <div class="col-9">
             <input type="text" name="name" placeholder="支出項目名稱" class="form-control" required>
           </div>
+          <div class="valid-feedback">OK!</div>
+          <div class="invalid-feedback">請填寫</div>
         </div>
       </div>
     </div>
@@ -60,18 +62,20 @@
       </div>
     </div>
 
-  <div class="row my-5 text-center">
-    <div class="col-6 offset-3">
-      <button type="submit" class="btn btn-info btn-block">新增支出</button>
+    <div class="row my-5 text-center">
+      <div class="col-6 offset-3">
+        <button type="submit" class="btn btn-info btn-block" id="add-submit">新增支出</button>
+      </div>
     </div>
-  </div>
-
-
-
-
-
-
   </form>
 
-
 </div>
+
+<script>
+  const addForm = document.querySelector('#add-form')
+  const addSubmit = document.querySelector('#add-submit')
+
+  addSubmit.addEventListener('click', function onAddSubmitClicked(event) {
+    addForm.classList.add('was-validated')
+  })
+</script>

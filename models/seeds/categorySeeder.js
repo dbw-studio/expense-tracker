@@ -21,6 +21,10 @@ db.once('open', () => {
   {
     category: '其他',
     icon: '<i class="fas fa-pen"></i>'
+  }).then(() => {
+    console.log('Category seed done.')
+    return db.close()
+  }).then(() => {
+    console.log('Database connection is closed.')
   })
-  console.log('Category seed done.')
 })

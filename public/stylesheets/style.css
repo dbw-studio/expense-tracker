@@ -1,3 +1,7 @@
 h2 {
   color: red;
 }
+
+a:hover {
+  text-decoration: none;
+}

@@ -8,14 +8,14 @@
     </div>
   </div>
 
-  <form action="/record" method="POST"></form>
+  <form action="/records/{{ record._id }}?_method=PUT" method="POST">
 
   <div class="row mt-3">
     <div class="col">
       <div class="form-group row align-items-center">
         <label for="name" class="col-3">名稱* ：</label>
         <div class="col-9">
-          <input type="text" name="name" placeholder="支出項目名稱" class="form-control" value="捷運" required> 
+          <input type="text" name="name" placeholder="支出項目名稱" class="form-control" value="{{ record.name }}" required> 
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@
       <div class="form-group row">
         <label for="date" class="col-3">日期* ：</label>
         <div class="col-9">
-          <input type="date" name="date" value="2021-06-01" class="form-control" required>
+          <input type="date" name="date" value="{{ record.date }}" class="form-control" required>
         </div>
       </div>
     </div>
@@ -38,7 +38,7 @@
         <label for="category" class="col-3">類別* ：</label>
         <div class="col-9">
           <select name="category" id="category" class="form-control" required>
-            <option value="交通出行">交通出行</option>
+            <option value="{{ record.category }}">{{ record.category }}</option>
             {{#each categories}}
               <option value="{{this.category}}">{{this.category}}</option>
             {{/each}}
@@ -54,7 +54,7 @@
       <div class="form-group row">
         <label for="amout" class="col-3">金額* ：</label>
         <div class="col-9">
-          <input type="number" name="amount" class="form-control" aria-placeholder="支出金額" min=0 required value="120">
+          <input type="number" name="amount" class="form-control" aria-placeholder="支出金額" min=0 required value="{{ record.amount }}">
         </div>
       </div>
     </div>
@@ -65,10 +65,6 @@
       <button type="submit" class="btn btn-info btn-block">送出</button>
     </div>
   </div>
-
-
-
-
 
   </form>
 

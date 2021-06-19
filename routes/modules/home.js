@@ -7,12 +7,18 @@ router.get('/', (req, res) => {
   Record.find()
     .lean()
     .then(records => {
+      let totalAmount = 0
+
+      records.forEach(record => {
+        totalAmount += record.amount
+      })
+
       Category.find()
         .lean()
-        .then(categories => res.render('index', { records, categories }))
-        .catch(error => console.log(error))
+        .then(categories => res.render('index', { records, categories, totalAmount }))
+        .catch(e => console.log(e))
     })
-    .catch(error => console.log(error))
+    .catch(e => console.log(e))
 })
 
 module.exports = router
