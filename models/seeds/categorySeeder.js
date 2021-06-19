@@ -4,7 +4,7 @@ const Category = require('../category')
 db.once('open', () => {
   Category.create({
     category: '家居物業',
-    icon: '<i class="fas fa-utensils"></i>'
+    icon: '<i class="fas fa-home"></i>'
   },
   {
     category: '交通出行',

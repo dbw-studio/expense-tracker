@@ -26,11 +26,11 @@
 <div class="container mt-4">
     <table class="table table-striped">
       <tbody>
-
+        {{#if noRecord}}<p>※ 暫無支出紀錄 ※</p>{{/if}}
         {{#each records}}
           <tr>
             {{!-- 支出內容 --}}
-            <th scope="row"> {{ this.category }} {{ categories.category}}</th>
+            <th scope="row"> {{{ this.category }}}</th>
             <td><h4>{{ this.name }}</h4>
             <small>{{ this.date }}</small></td>
             <td>{{ this.amount }}</td>
@@ -61,7 +61,7 @@
       <a href="/records/new"><button type="submit" class="btn btn-info btn-block">新增支出</button></a>
     </div>
     <div class="col-4 col-md-2">
-      <a href="/"><button class="btn btn-secondary btn-block">回總清單</button></a>
+      <a href="/"><button class="btn btn-secondary btn-block">總清單</button></a>
     </div>
   </div>
 </div>

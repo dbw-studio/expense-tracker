@@ -13,7 +13,6 @@ router.get('/new', (req, res) => {
 
 router.post('/', (req, res) => {
   const { name, date, category, amount } = req.body
-  console.log(name)
   return Record.create({ name, date, category, amount })
     .then(() => res.redirect('/'))
     .catch(e => console.log(e))

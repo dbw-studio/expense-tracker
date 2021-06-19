@@ -10,13 +10,26 @@ router.get('/', (req, res) => {
     .then(records => {
       let totalAmount = 0
 
-      records.forEach(record => {
-        totalAmount += record.amount
-      })
+      let noRecord = false
+      if (records.length === 0) {
+        noRecord = true
+      }
 
       Category.find()
         .lean()
-        .then(categories => res.render('index', { records, categories, totalAmount, category }))
+        .then(categories => {
+          records.forEach(record => {
+            totalAmount += record.amount
+
+            categories.forEach(category => {
+              if (record.category === category.category) {
+                record.category = category.icon
+              }
+            })
+          })
+
+          res.render('index', { records, categories, totalAmount, category, noRecord })
+        })
         .catch(e => console.log(e))
     })
     .catch(e => console.log(e))
@@ -26,20 +39,30 @@ router.post('/filter', (req, res) => {
   const category = req.body.filteredCategory
   let filteredRecords = []
   let totalAmount = 0
+  let noRecord = false
   Record.find()
     .lean()
     .then(records => {
-      records.forEach(record => {
-        filteredRecords = records.filter(record => record.category === category)
-      })
-
-      filteredRecords.forEach(filteredRecord => {
-        totalAmount += filteredRecord.amount
-      })
-
       Category.find().lean()
         .then(categories => {
-          res.render('index', { records: filteredRecords, categories, totalAmount, category })
+          records.forEach(record => {
+            filteredRecords = records.filter(record => record.category === category)
+          })
+
+          filteredRecords.forEach(filteredRecord => {
+            totalAmount += filteredRecord.amount
+
+            categories.forEach(category => {
+              if (filteredRecord.category === category.category) {
+                filteredRecord.category = category.icon
+              }
+            })
+          })
+
+          if (filteredRecords.length === 0) {
+            noRecord = true
+          }
+          res.render('index', { records: filteredRecords, categories, totalAmount, category, noRecord })
         })
     })
     .catch(e => console.log(e))
