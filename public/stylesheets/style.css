@@ -1,7 +1,16 @@
-h2 {
-  color: red;
+h5 {
+  line-height: 35px;
 }
 
 a:hover {
   text-decoration: none;
+}
+
+tr:hover{
+  background-color: rgb(228, 241, 245) !important;
+}
+
+.table td, .table th {
+  vertical-align: middle !important;
+  border: 0px !important;
 }

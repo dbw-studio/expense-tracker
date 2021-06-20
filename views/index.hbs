@@ -1,24 +1,30 @@
 <div class="container mt-4">
   {{!-- 類別下拉 --}}
-  <form action="/filter" method="POST">
-    <div class="form-group row">
-      <label for="category" class="col-2">類別</label>
-      <select name="filteredCategory" id="filteredCategory" class="form-control col-10" onchange="this.form.submit()">
-        {{#if ( eq category '')}} <option selected disabled value="">請下拉</option> {{/if}}
-        {{#if ( neq category '')}} <option selected disabled value="{{ category }}">{{ category }}</option> {{/if}}
-        {{#each categories}}
-        <option name="{{this.category}}"  value="{{this.category}}" {{#if (eq ../category this.category ) }} selected {{/if}}> {{this.category}} </option>
-        {{/each}}
-      </select>
+  <div class="row">
+    <div class="col-12">
+      <form action="/filter" method="POST">
+        <div class="form-group row align-items-center">
+          <label for="category" class="col-2 text-center m-0">類別</label>
+          <select name="filteredCategory" id="filteredCategory" class="form-control col-9 col-md-8" onchange="this.form.submit()">
+            {{#if ( eq category '')}} <option selected disabled value="">請下拉</option> {{/if}}
+            {{#if ( neq category '')}} <option selected disabled value="{{ category }}">{{ category }}</option> {{/if}}
+            {{#each categories}}
+            <option name="{{this.category}}" value="{{this.category}}" {{#if (eq ../category this.category ) }} selected
+              {{/if}}> {{this.category}} </option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
+
   {{!-- 總金額 --}}
-  <div class="row mt-4">
-    <div class="col">
-      <h4>總金額：</h4>
+  <div class="row mt-4 justify-content-center ">
+    <div class="col-4 col-md-2 bg-info p-2 p-md-3 rounded-pill">
+      <h5 class="m-0 text-light text-center ">總金額</h5>
     </div>
-    <div class="col">
-      <h3>{{ totalAmount }}</h3>
+    <div class="col-6 col-md-6 bg-info p-2 p-md-3 ml-2 rounded-pill">
+      <h5 class="m-0 text-light text-center">NT.&nbsp;&nbsp;{{ totalAmount }} </h5>
     </div>
   </div>
 </div>
@@ -26,24 +32,37 @@
 <div class="container mt-4">
     <table class="table table-striped">
       <tbody>
-        {{#if noRecord}}<p>※ 暫無支出紀錄 ※</p>{{/if}}
+        
+          <tr class="text-center">
+            <th class="col-1"><span class="d-none d-sm-block">類別</span></th>
+            <th class="col-4">支出日期&項目</th>
+            <th class="col-2">金額</th>
+            <th class="col-3">編輯</th>
+          </tr>
+         
+            {{#if noRecord}}<tr> <td colspan="4">※ 暫無支出紀錄 ※</td> </tr>{{/if}}
+          
         {{#each records}}
-          <tr>
+          <tr class="align-items-center">
+
             {{!-- 支出內容 --}}
-            <th scope="row"> {{{ this.category }}}</th>
-            <td><h4>{{ this.name }}</h4>
-            <small>{{ this.date }}</small></td>
-            <td>{{ this.amount }}</td>
+            <td scope="row" class="col-1 text-center"> {{{ this.category }}}</td>
+            <td class="col-4"><h5><span class="font-italic text-secondary"><small>{{ this.date }}</small></span>&nbsp;&nbsp;&nbsp;{{ this.name }} 
+              </h5></td>
+            <td class="col-2 mt-2 text-right">{{ this.amount }}</td>
             {{!-- 編輯選項 --}}
-            <td>
-              <form action="/records/{{ _id }}/edit" method="GET">
-                <button class="btn"><div class="btn">修改</div></button>
-              </form>
-            </td>
-            <td>
-              <form action="./records/{{ this._id }}?_method=DELETE" method="POST">
-                <button type="submit" class="btn" id="delete-submit" onclick="return(confirm('確認要刪除【{{ this.name }}】嗎?'))">刪除</button>
-              </form>
+            <td class="text-center">
+              <div class="d-inline-flex ml-2 mt-md-0">
+                <form action="/records/{{ _id }}/edit" method="GET">
+                  <button class="btn btn-info" title="編輯"><i class="fas fa-pen"></i></button>
+                </form>
+              </div>
+              <div class="d-inline-flex ml-2 mt-2 mt-md-0 ">
+                <form action="./records/{{ this._id }}?_method=DELETE" method="POST">
+                  <button class="btn btn-danger" title="刪除" onclick="return(confirm('確認要刪除【{{ this.name }}】嗎?'))"><i
+                      class="fa fa-trash"></i></button>
+                </form>
+              </div>
             </td>
           </tr>
         {{/each}}
@@ -56,9 +75,9 @@
 </div>
 
 <div class="container my-5">
-  <div class="row text-center justify-content-center">
-    <div class="col-5 col-md-4 ">
-      <a href="/records/new"><button type="submit" class="btn btn-info btn-block">新增支出</button></a>
+  <div class="row text-center justify-content-center align-items-center">
+    <div class="col-5 col-md-3 col-xl-2">
+      <a href="/records/new"><button type="submit" class="btn btn-success btn-block py-3">新增支出</button></a>
     </div>
     <div class="col-4 col-md-2">
       <a href="/"><button class="btn btn-secondary btn-block">總清單</button></a>
