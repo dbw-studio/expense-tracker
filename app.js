@@ -22,6 +22,6 @@ app.use(express.static('public'))
 app.use(methodOverride('_method'))
 app.use(routes)
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log(`Server is listening localhost:${PORT}`)
 })
