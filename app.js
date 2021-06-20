@@ -1,13 +1,14 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
+const PORT = process.env.PORT || 3000
 
 // Require handlebars and just-handlebars-helpers
 const Handlebars = require('handlebars')
-const H = require('just-handlebars-helpers')
+const hbsHelpers = require('just-handlebars-helpers')
 
 // Register just-handlebars-helpers with handlebars
-H.registerHelpers(Handlebars)
+hbsHelpers.registerHelpers(Handlebars)
 
 const app = express()
 const routes = require('./routes')
@@ -22,5 +23,5 @@ app.use(methodOverride('_method'))
 app.use(routes)
 
 app.listen(3000, () => {
-  console.log('Server is listening localhost:3000')
+  console.log(`Server is listening localhost:${PORT}`)
 })
